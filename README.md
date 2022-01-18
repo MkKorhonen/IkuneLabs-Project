@@ -1,2 +1,2 @@
 # IkuneLabs-Project
-Github repo for IkuneLabs project documents
+Github repository for IkuneLabs project documents
