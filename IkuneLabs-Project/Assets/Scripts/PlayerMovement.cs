@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag == "Ghost")
         {
             //Add transition to ghost catching scene
-            Debug.Log("Touching ghost");
+            SceneManager.LoadScene("CatchingGhost");
         }
     }
 }
