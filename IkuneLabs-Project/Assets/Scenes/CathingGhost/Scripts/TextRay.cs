@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class TextRay : MonoBehaviour
 {
@@ -12,29 +12,38 @@ public class TextRay : MonoBehaviour
     private List<GameObject> ghost = new List<GameObject>();
     private GameObject curSelected;
     private Camera cam;
-    public GameObject ghostPrefab;
+    public List<GameObject> ghostPrefabs;
     public float spawnDistance;
     public GameObject selector;
+    private int ghostCol;
+    public GameObject itemMenu;
+    public GameObject gun;
 
     public float travelTime;
-    private float lastTime;
-    private int directionValue;
-    private float phase1;
-    
-    public int health = 200;
+
+    private int health;
     public TextMeshProUGUI healthText;
-    
+    public int pHealth = 3;
+    public TextMeshProUGUI phealthText;
+    public Slider slider;
+    public TextMeshProUGUI errorText;
+
     public TextMeshProUGUI timerText;
     public float catchTime;
     private float curCatchTime;
 
-    public Slider slider;
-
     public bool gameOver;
     public GameObject missghostScreen;
     public GameObject catchScreen;
+    public GameObject deathScreen;
+    public GameObject armor;
 
     public float moveSpeed;
+
+    public GhostList ghostList;
+    public float attackRange;
+    GhostScript ghostScript;
+    StunnedGhost stunnedGhost;
 
     public static TextRay instance;
     private void Awake()
@@ -46,24 +55,19 @@ public class TextRay : MonoBehaviour
     {
         //Setting some starting values
 
-        healthText.text = "HP: " + health;
-        slider.maxValue = health;
-        slider.value = health;
-        curCatchTime = catchTime;
         cam = Camera.main;
         SpawnGhost();
-        lastTime = Time.time;
-        directionValue = 1;
-        phase1 = health / 2;
+        errorText.text = "";
+        phealthText.text = "Player HP: " + pHealth;
+        curCatchTime = catchTime;
+        ghostScript = GameObject.FindGameObjectWithTag("Ghost").GetComponent<GhostScript>();
+        stunnedGhost = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<StunnedGhost>();
     }
 
     private void Update()
     {
         //Makes the ghost prefab always look at the AR camera when player is rotatian around the ghost
-        ghost[0].transform.rotation = Quaternion.LookRotation(-Camera.main.transform.forward, Camera.main.transform.up);
-
-        GhostStatus();
-
+        ghost[0].transform.rotation = Quaternion.LookRotation(-cam.transform.forward, cam.transform.up);
 
         //stops the game when gameover function is called
         if (gameOver)
@@ -79,7 +83,7 @@ public class TextRay : MonoBehaviour
         }
 
         //Shoots ray from the cross hair when player hold her/his finger on the screen, if it hits an object that is in the spawned ghost list it will select it
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && itemMenu.activeSelf == false)
         {
             Ray ray = cam.ScreenPointToRay(selector.transform.position);
             RaycastHit hit;
@@ -110,24 +114,24 @@ public class TextRay : MonoBehaviour
     {
         
         if (curSelected != null)
-            ToggleSelectionVisual(curSelected, false);
+            ToggleSelectionVisual(curSelected, true);
 
         curSelected = selected;
-        ToggleSelectionVisual(curSelected, true);
+        ToggleSelectionVisual(curSelected, false);
 
     }
 
     void Deselect()
     {
         if (curSelected != null)
-            ToggleSelectionVisual(curSelected, false);
+            ToggleSelectionVisual(curSelected, true);
 
         curSelected = null;
     }
 
     void ToggleSelectionVisual(GameObject obj, bool toggle)
     {
-        obj.transform.Find("DamagedGhost").gameObject.SetActive(toggle);
+        obj.transform.Find("NormalGhost").gameObject.SetActive(toggle);
     }
 
     public void ResetTest()
@@ -137,38 +141,77 @@ public class TextRay : MonoBehaviour
 
     public void Scenechange()
     {
-        SceneManager.LoadScene("CampusScene");
+
     }
 
-    //Spawns the ghost prefab and then adds it in the list of spawned ghosts
-    void SpawnGhost()
+    //Spawns a random ghost prefab and then adds it in the list of spawned ghosts
+    public void SpawnGhost()
     {
 
-        Vector3 spawnCircle = Random.onUnitSphere;
+        int _num = 0;
+
+        foreach (GameObject gameObject in ghostPrefabs)
+        {
+            _num++;
+        }
+        int randomNumber = Random.Range(0, _num);
+
+        /*Vector3 spawnCircle = Random.onUnitSphere;
         spawnCircle.y = -1;
 
-        Vector3 spawnPos = cam.transform.position + (spawnCircle * spawnDistance);
+        Vector3 spawnPos = cam.transform.position + (spawnCircle * spawnDistance);*/
 
-        GameObject obj = Instantiate(ghostPrefab, spawnPos, Quaternion.identity);
+
+        GameObject obj = Instantiate(ghostPrefabs[randomNumber], new Vector3(0, -1, spawnDistance), Quaternion.identity);
+        ghostCol = randomNumber;
         ghost.Add(obj);
     }
 
     //Makes the healthbar move everytime this function is called and if the health goes to zero destroy the ghost prefab and open new window
-   void TakeDamage()
+   public void TakeDamage()
     {
         health--;
         slider.value--;
 
         healthText.text = "Hp: " + health;
-        
+        GhostStatus(health);
 
-        if(health <= 0)
-        {
+
+       if (health <= 0)
+       {
+            //if health is zero, deactivate and destroys most of the gameobjects and calls StunnedGhost function
+            Vector3 pos = ghost[0].transform.position;
             ghost.Remove(curSelected);
             Destroy(curSelected);
-            CatchGhost();
-        }
+            timerText.enabled = false;
+            phealthText.enabled = false;
+            gun.SetActive(false);
+            stunnedGhost.StunnedGhosts(pos, ghostCol);
+       }
 
+    }
+
+    //If armor gameObject is not active minus 1 from playerHealth text.
+    //if health goes to zero call deathScreen function
+    public void PlayerTakeDamage()
+    {
+        if (armor.activeSelf == false)
+        {
+            pHealth--;
+            phealthText.text = "Player HP: " + pHealth;
+
+            if (pHealth <= 0)
+            {
+                DeathScreen();
+            }
+        }
+        else return;
+
+    }
+
+    public void TestButtom()
+    {
+        TakeDamage();
     }
 
     //Stops the game, destroys the current selected ghost prefab and opens new window
@@ -179,65 +222,77 @@ public class TextRay : MonoBehaviour
         Destroy(curSelected);
         missghostScreen.SetActive(true);
 
-        StartCoroutine(ScenechangeDelay());
+        StartCoroutine(ScenechangeDelay(missghostScreen));
 
     }
 
-    public void CatchGhost()
+    //Stops the game, destroys the current selected ghost prefab and opens new window
+    public void CatchGhost(GameObject obj)
     {
         gameOver = true;
         catchScreen.SetActive(true);
+        ghostList.CollectedGhost(obj);
 
-        StartCoroutine(ScenechangeDelay());
+        StartCoroutine(ScenechangeDelay(catchScreen));
     }
 
-    IEnumerator ScenechangeDelay()
+    //Stops the game, destroys the current selected ghost prefab and opens new window
+    void DeathScreen()
     {
-        yield return new WaitForSeconds(3);
-        Scenechange();
+        gameOver = true;
+        ghost.Remove(curSelected);
+        Destroy(curSelected);
+        deathScreen.SetActive(true);
+
+        StartCoroutine(ScenechangeDelay(deathScreen));
+
+    }
+
+    IEnumerator ScenechangeDelay(GameObject obj)
+    {
+        yield return new WaitForSeconds(5);
+        obj.SetActive(false);
+    }
+
+    //sets health and healthText with given value
+    public void GetHealth(int hp)
+    {
+        health = hp;
+        healthText.text = "HP: " + health;
+        slider.maxValue = health;
+        slider.value = health;
     }
 
     //Checks the ghost prefabs hp status and calls moveghost function if the ghost's hp is too low 
-    void GhostStatus()
+    void GhostStatus(int shp)
     {
-        if(health < phase1)
-        {
-            MoveGhost();
-        }
+        ghostScript.HpStatus(shp);
     }
 
-    //Moves the ghost around the player camare in semi cirle motion back and forth
-    public void MoveGhost()
+    //adds more catchTime
+    public void MoreTime()
     {
-        if(directionValue == 1)
-        {
-            if (Time.time - lastTime > travelTime)
-            {
-                lastTime = Time.time;
-                directionValue++;
-            }
-            else
-            {
-                ghost[0].transform.LookAt(cam.transform.position);
-                ghost[0].transform.position += ghost[0].transform.right * moveSpeed * Time.deltaTime;
-            }
-
-        }
-        
-
-        if(directionValue == 2)
-        {
-            if (Time.time - lastTime > travelTime)
-            {
-                lastTime = Time.time;
-                directionValue--;
-            }
-            else
-            {
-                ghost[0].transform.LookAt(cam.transform.position);
-                ghost[0].transform.position += -ghost[0].transform.right * moveSpeed * Time.deltaTime;
-            }
-        }
+        curCatchTime += 30;
     }
 
+    //Activate armor gameobject
+    public void ActiveArmor()
+    {
+        armor.SetActive(true);
+    }
+    
+    //activates and deactivates itemMenu gameobject
+    public void ItemMenuButtom()
+    {
+        if (itemMenu.activeSelf == false)
+        {
+            itemMenu.SetActive(true);
+            gun.SetActive(false);
+        }
+        else
+        {
+            itemMenu.SetActive(false);
+            gun.SetActive(true);
+        }
+    }
 }
