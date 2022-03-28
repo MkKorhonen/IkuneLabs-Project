@@ -6,22 +6,37 @@ public class SpawnGhosts : MonoBehaviour
 {
     public GameObject target;
     public GameObject ghost;
+    public int timer = 3;
+    public int maxSpawns = 3;
     public bool canSpawn = false;
     private Bounds bounds;
     private float x, y, z;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         bounds = GetComponent<Collider>().bounds;
+        StartCoroutine(SpawnTimer());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(canSpawn)
+
+    }
+
+    IEnumerator SpawnTimer()
+    {
+        while(maxSpawns > 0)
         {
-            SpawnGhost();
+            yield return new WaitForSeconds(timer);
+
+            if (canSpawn)
+            {
+                maxSpawns--;
+                SpawnGhost();
+            }
         }
     }
 
@@ -47,7 +62,5 @@ public class SpawnGhosts : MonoBehaviour
         y = Random.Range(-bounds.extents.y, bounds.extents.y);
         z = Random.Range(-bounds.extents.z, bounds.extents.z);
         Instantiate(ghost, bounds.center + new Vector3(x, y, z), Quaternion.identity);
-        
-        canSpawn = false;
     }
 }

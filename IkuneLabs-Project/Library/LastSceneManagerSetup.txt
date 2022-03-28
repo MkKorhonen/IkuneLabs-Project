@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/CathingGhost/CatchingGhost.unity
+- path: Assets/Scenes/CampusScene.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
