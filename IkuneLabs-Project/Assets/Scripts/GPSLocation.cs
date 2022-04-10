@@ -5,18 +5,22 @@ using UnityEngine.UI;
 
 public class GPSLocation : MonoBehaviour
 {
-    private float longitudeBound1 = 25.459000f;
-    private float longitudeBound2 = 25.472478f;
+    private float longitudeBound1 = 25.472478f;
+    private float longitudeBound2 = 25.459000f;
     private float latitudeBound1 = 65.062820f;
     private float latitudeBound2 = 65.055846f;
-    private float playerLatitude, playerLongitude;
+    private float playerCurLatitude, playerCurLongitude, playerLastLatitude, playerLastLongitude;
+    private float centerLatitude = 65.059333f;
+    private float centerLongitude = 25.465739f;
     public Text GPSStatus, latitudeValue, longitudeValue, boundsCheck;
     public CharacterController playerController;
+    public GameObject center, left, right, top, bottom;
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(GPSLoc());
+        playerController.transform.position = center.transform.position;
     }
 
     // Update is called once per frame
@@ -73,23 +77,44 @@ public class GPSLocation : MonoBehaviour
         {
             // Access granted to GPS values and the service has been initialized
             GPSStatus.text = "Running GPS.";
-            playerLatitude = Input.location.lastData.latitude;
-            playerLongitude = Input.location.lastData.longitude;
+            playerCurLatitude = Input.location.lastData.latitude;
+            playerCurLongitude = Input.location.lastData.longitude;
             latitudeValue.text = Input.location.lastData.latitude.ToString();
             longitudeValue.text = Input.location.lastData.longitude.ToString();
 
-            if (playerLatitude < latitudeBound1 && playerLatitude > latitudeBound2 && playerLongitude < longitudeBound2 && playerLongitude > longitudeBound1)
+            if (playerCurLatitude < latitudeBound1 && playerCurLatitude > latitudeBound2 && playerCurLongitude < longitudeBound1 && playerCurLongitude > longitudeBound2)
             {
                 boundsCheck.text = "Player within bounds";
                 
-                //Movement based on GPS coordinates, not working
-                Vector3 playerCoordinates = Quaternion.AngleAxis(playerLongitude, -Vector3.up) * Quaternion.AngleAxis(playerLatitude, -Vector3.right) * new Vector3(0, 0, 1);
-                playerController.Move(playerCoordinates * Time.deltaTime);
+                if(playerCurLatitude > centerLatitude && playerCurLatitude != playerLastLatitude)
+                {
+                    // Move up
+                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, top.transform.position, 5 * Time.deltaTime);
+                }
+                else
+                {
+                    // Move down
+                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, bottom.transform.position, 5 * Time.deltaTime);
+                }
+
+                if(playerCurLongitude > centerLongitude && playerCurLongitude != playerLastLongitude)
+                {
+                    // Move right
+                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, right.transform.position, 5 * Time.deltaTime);
+                }
+                else
+                {
+                    // Move left
+                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, left.transform.position, 5 * Time.deltaTime);
+                }
             }
             else
             {
                 boundsCheck.text = "Player not within bounds";
             }
+
+            playerLastLatitude = playerCurLatitude;
+            playerLastLongitude = playerCurLongitude;
         }
         else
         {

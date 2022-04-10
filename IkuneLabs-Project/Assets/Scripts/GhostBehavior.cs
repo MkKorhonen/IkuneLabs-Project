@@ -6,7 +6,7 @@ public class GhostBehavior : MonoBehaviour
 {
     public Transform player;
     public int moveSpeed = 5;
-    public int MinDistance = 200;
+    public int MinDistance = 0;
 
     // Start is called before the first frame update
     void Start()

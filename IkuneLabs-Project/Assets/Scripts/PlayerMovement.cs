@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     CharacterController characterController;
+    public GameObject dman;
     public float speed = 50f;
     public float mobileSpeed = 3f;
     private Vector3 moveDirection = Vector3.zero;
@@ -23,7 +24,16 @@ public class PlayerMovement : MonoBehaviour
         moveDirection *= speed;
 
         characterController.Move(moveDirection * Time.deltaTime);
-
+        if(moveDirection != Vector3.zero)
+        {
+            dman.transform.rotation = Quaternion.LookRotation(moveDirection);
+            dman.GetComponent<Animation>().Play("Run");
+        }
+        else
+        {
+            dman.GetComponent<Animation>().Play("Idle");
+        }
+        
         //Touch movement
         if(Input.touchCount > 0)
         {
