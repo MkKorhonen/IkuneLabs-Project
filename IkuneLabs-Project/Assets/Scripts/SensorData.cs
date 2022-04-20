@@ -8,7 +8,8 @@ public class SensorData : MonoBehaviour
 {
     public GameObject ghost;
     public string id = "";
-    public int[] co2Levels = new int[7];
+    // 3 co2 levels per day every day of the week, from 12pm to 8am, 8am to 4pm, 4pm to 12pm
+    public int[] co2Levels = new int[21];
     public int currentCo2;
     public bool canSpawn = false;
     public int spawnInterval = 3;
@@ -16,6 +17,7 @@ public class SensorData : MonoBehaviour
     public Text spawnText;
     private DateTime dt;
     private string currentDay;
+    private string currentTime;
     private Bounds bounds;
     private float x, y, z;
 
@@ -25,7 +27,9 @@ public class SensorData : MonoBehaviour
         // Get the co2 levels from the week and the current day
         dt = DateTime.Now;
         currentDay = dt.DayOfWeek.ToString();
-        currentCo2 = GetCo2LevelForCurrentDay();
+        currentTime = dt.TimeOfDay.ToString();
+        currentTime = currentTime.Substring(0, currentTime.IndexOf(":"));
+        currentCo2 = GetCo2Level();
         bounds = GetComponent<Collider>().bounds;
         spawnText.enabled = false;
         StartCoroutine(SpawnTimer());
@@ -55,22 +59,22 @@ public class SensorData : MonoBehaviour
     private void SetSpawnCount()
     {
         // Set the amount of ghosts to spawn to correspond to co2 levels in the spawn area
-        if(currentCo2 < 600)
+        if(currentCo2 < 500)
         {
             spawnText.text = "Ghost activity: Very low";
             spawnCount = 1;
         }
-        else if(currentCo2 < 700)
+        else if(currentCo2 < 600)
         {
             spawnText.text = "Ghost activity: Low";
             spawnCount = 2;
         }
-        else if(currentCo2 < 800)
+        else if(currentCo2 < 700)
         {
             spawnText.text = "Ghost activity: Medium";
             spawnCount = 3;
         }
-        else if (currentCo2 < 900)
+        else if (currentCo2 < 800)
         {
             spawnText.text = "Ghost activity: High";
             spawnCount = 4;
@@ -82,35 +86,115 @@ public class SensorData : MonoBehaviour
         }
     }
 
-    private int GetCo2LevelForCurrentDay()
+    private int GetCo2Level()
     {
-        int result = -100;
-        switch(currentDay)
+        int result = 0;
+        int time = int.Parse(currentTime);
+
+        if(currentDay == "Monday")
         {
-            case "Monday":
+            if(time < 08)
+            {
                 result = co2Levels[0];
-                break;
-            case "Tuesday":
+            }
+            else if(time > 08 && time < 16)
+            {
                 result = co2Levels[1];
-                break;
-            case "Wednesday":
+            }
+            else
+            {
                 result = co2Levels[2];
-                break;
-            case "Thursday":
+            }
+        }
+        if (currentDay == "Tuesday")
+        {
+            if (time < 08)
+            {
                 result = co2Levels[3];
-                break;
-            case "Friday":
+            }
+            else if (time > 08 && time < 16)
+            {
                 result = co2Levels[4];
-                break;
-            case "Saturday":
+            }
+            else
+            {
                 result = co2Levels[5];
-                break;
-            case "Sunday":
+            }
+        }
+        if (currentDay == "Wednesday")
+        {
+            if (time < 08)
+            {
                 result = co2Levels[6];
-                break;
-            default:
-                result = 100;
-                break;
+            }
+            else if (time > 08 && time < 16)
+            {
+                result = co2Levels[7];
+            }
+            else
+            {
+                result = co2Levels[8];
+            }
+        }
+        if (currentDay == "Thursday")
+        {
+            if (time < 08)
+            {
+                result = co2Levels[9];
+            }
+            else if (time > 08 && time < 16)
+            {
+                result = co2Levels[10];
+            }
+            else
+            {
+                result = co2Levels[11];
+            }
+        }
+        if (currentDay == "Friday")
+        {
+            if (time < 08)
+            {
+                result = co2Levels[12];
+            }
+            else if (time > 08 && time < 16)
+            {
+                result = co2Levels[13];
+            }
+            else
+            {
+                result = co2Levels[14];
+            }
+        }
+        if (currentDay == "Saturday")
+        {
+            if (time < 08)
+            {
+                result = co2Levels[15];
+            }
+            else if (time > 08 && time < 16)
+            {
+                result = co2Levels[16];
+            }
+            else
+            {
+                result = co2Levels[17];
+            }
+        }
+        if (currentDay == "Sunday")
+        {
+            if (time < 08)
+            {
+                result = co2Levels[18];
+            }
+            else if (time > 08 && time < 16)
+            {
+                result = co2Levels[19];
+            }
+            else
+            {
+                result = co2Levels[20];
+            }
         }
         return result;
     }

@@ -756,7 +756,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 8307634042012936542, guid: ef71b76d4b1810146aa50b91a8e771b8, type: 3}
   id: A81758FFFE030FB7
-  co2Levels: 1402000000020000ef01000004020000b8020000f701000041020000
+  co2Levels: 6a020000180200000a020000410200001e0200000c020000220200001902000006020000150200000e0200001d0200000e020000180200004b020000220200000f0200004902000021020000150200001c020000
   currentCo2: 0
   canSpawn: 0
   spawnInterval: 3
@@ -1426,7 +1426,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410002649}
-  m_LocalRotation: {x: 0.51620865, y: 0.022924665, z: -0.013823945, w: 0.8560444}
+  m_LocalRotation: {x: 0.51620865, y: 0.0229247, z: -0.013823968, w: 0.8560444}
   m_LocalPosition: {x: -80.32, y: 176.97, z: -291.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3547,7 +3547,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008699044}
-  m_LocalRotation: {x: 0.51620865, y: 0.022924665, z: -0.013823945, w: 0.8560444}
+  m_LocalRotation: {x: 0.51620865, y: 0.0229247, z: -0.013823968, w: 0.8560444}
   m_LocalPosition: {x: -80.32, y: 176.97, z: -291.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3620,7 +3620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 8307634042012936542, guid: ef71b76d4b1810146aa50b91a8e771b8, type: 3}
   id: A81758FFFE03104C
-  co2Levels: 3c0200004b0200002b02000038020000530200002d0200002f020000
+  co2Levels: 6e020000550200005102000049020000550200003a02000047020000360200003a020000360200003e020000480200003e0200004e02000036020000440200004002000044020000530200007802000051020000
   currentCo2: 0
   canSpawn: 0
   spawnInterval: 3
@@ -3895,7 +3895,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bounds
+  m_Text: 
 --- !u!222 &1099240158
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4581,7 +4581,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 8307634042012936542, guid: ef71b76d4b1810146aa50b91a8e771b8, type: 3}
   id: A81758FFFE030F92
-  co2Levels: 220200000a0200000d0200000b0200008d0200001e03000027030000
+  co2Levels: 59020000350200001c0200002002000018020000060200001f020000130200001002000010020000170200000e0200001c0200001002000067030000af02000064020000e7020000940200006d02000061020000
   currentCo2: 0
   canSpawn: 0
   spawnInterval: 3
@@ -5002,7 +5002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 8307634042012936542, guid: ef71b76d4b1810146aa50b91a8e771b8, type: 3}
   id: A81758FFFE031053
-  co2Levels: 1e030000ff0200003604000016030000ff0200001603000008030000
+  co2Levels: 4a0300007e0300002a030000100300002b030000fd0200001f0300001103000027030000240300002203000039030000240300000f0300002a0300001b03000015030000a20300002f030000280300005e030000
   currentCo2: 0
   canSpawn: 0
   spawnInterval: 3
@@ -5591,7 +5591,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghost: {fileID: 8307634042012936542, guid: ef71b76d4b1810146aa50b91a8e771b8, type: 3}
   id: A81758FFFE031060
-  co2Levels: 94010000880100009e010000970100008d0100009a010000a3010000
+  co2Levels: ce0100007e010000ab01000093010000b5010000a70100007f010000b1010000960100009c010000b601000092010000a70100009a0100009f010000a1010000a6010000aa01000094010000c5010000c2010000
   currentCo2: 0
   canSpawn: 0
   spawnInterval: 3
@@ -6148,7 +6148,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: GPS Status
+  m_Text: GPS status
 --- !u!1 &1939336727
 GameObject:
   m_ObjectHideFlags: 0

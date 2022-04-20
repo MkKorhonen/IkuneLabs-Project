@@ -35,7 +35,7 @@ public class GPSLocation : MonoBehaviour
         // Check if user has location service enabled
         if (!Input.location.isEnabledByUser)
         {
-            GPSStatus.text = "GPS not enabled.";
+            GPSStatus.text = "GPS not enabled";
             yield break;
         }
 
@@ -53,20 +53,20 @@ public class GPSLocation : MonoBehaviour
         // Service didn't init in time
         if(maxWait < 1)
         {
-            GPSStatus.text = "GPS time out.";
+            GPSStatus.text = "GPS timed out";
             yield break;
         }
 
         // Connection failed
         if(Input.location.status == LocationServiceStatus.Failed)
         {
-            GPSStatus.text = "GPS connection failed.";
+            GPSStatus.text = "GPS connection failed";
             yield break;
         }
         else
         {
             // Access granted
-            GPSStatus.text = "Running GPS.";
+            GPSStatus.text = "Running GPS";
             InvokeRepeating("UpdateGPSData", 0.5f, 1f);
         }
     }
@@ -119,7 +119,7 @@ public class GPSLocation : MonoBehaviour
         else
         {
             // Service stopped
-            GPSStatus.text = "GPS stopped.";
+            GPSStatus.text = "GPS stopped";
         }
     }
 }
