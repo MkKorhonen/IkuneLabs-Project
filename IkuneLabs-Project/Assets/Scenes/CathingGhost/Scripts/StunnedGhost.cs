@@ -7,6 +7,7 @@ using TMPro;
 public class StunnedGhost : MonoBehaviour
 {
     public List<GameObject> stunnedPrefabs;
+    public List<string> items;
     public GameObject catchingScreen;
     private GameObject stunnedGhost;
     public TextMeshProUGUI errorText;
@@ -35,6 +36,7 @@ public class StunnedGhost : MonoBehaviour
         {
             itemMenu.SetActive(false);
             capsule.SetActive(true);
+            textRay.RemoveItemsFromInv(1);
             
         }
         else
@@ -59,6 +61,7 @@ public class StunnedGhost : MonoBehaviour
         ghostList = GameObject.FindGameObjectWithTag("GhostData").GetComponent<GhostList>();
 
         ghostList.GetGhostColor(ghostColl);
+        textRay.LootHandler(ghostColl);
         textRay.CatchGhost(stunnedGhost);
         Destroy(stunnedGhost);
     }

@@ -174,7 +174,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5aefed8c05cd76a468551d6243807299, type: 2}
+  - {fileID: 2100000, guid: 5666a8fd66991774c869cc7e77c1d6ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -267,7 +267,6 @@ GameObject:
   - component: {fileID: 2119970649716152081}
   - component: {fileID: 2031505231193174363}
   - component: {fileID: 7475744388954331607}
-  - component: {fileID: -4620558450816672790}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Ghost
@@ -325,25 +324,6 @@ CapsuleCollider:
   m_Height: 1.9516041
   m_Direction: 1
   m_Center: {x: 0.007996708, y: 0.9556018, z: 0}
---- !u!114 &-4620558450816672790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116784133873417877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de3a65aa5b86cf140ad0ed1d82f5fc20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 10
-  movementPattern: 3
-  moveSpeed: 0.8
-  width: 5
-  height: 1
-  attackRange: 1.5
-  travelTime: 4
 --- !u!1 &2116828176386451935
 GameObject:
   m_ObjectHideFlags: 0
@@ -1792,7 +1772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4249229590284475710
 Transform:
   m_ObjectHideFlags: 0

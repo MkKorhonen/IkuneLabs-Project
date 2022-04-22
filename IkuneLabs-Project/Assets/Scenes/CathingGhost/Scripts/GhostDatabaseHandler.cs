@@ -40,7 +40,7 @@ public class GhostDatabaseHandler : MonoBehaviour
     public void Exitbut()
     {
         //Loads new scene
-        SceneManager.LoadScene("CatchingGhost");
+        SceneManager.LoadScene("CampusScene");
     }
 
     public void WhiteInfoBox()

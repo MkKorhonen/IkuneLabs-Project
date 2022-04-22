@@ -19,7 +19,7 @@ public class GhostInfo : MonoBehaviour
             info = "Yellow ghost.\nVery agressive.\nAttacks the player.";
 
         if (_num == 3)
-            info = "Blue ghost.\nVery calm ghost.\nMoves sideways.";
+            info = "Blue ghost.\nVery shy ghost.\nTeleports around.";
 
         return info;
     }

@@ -11,18 +11,15 @@ public class ItemMenuButtoms : MonoBehaviour
     public void StopGhost()
     {
         //Calls ChangeMovement function from GhostScript script
+        textRay = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<TextRay>();
         ghostScript = GameObject.FindGameObjectWithTag("Ghost").GetComponent<GhostScript>();
         ghostScript.ChangeMovement();
+        textRay.RemoveItemsFromInv(2);
     }
 
     public void DatabaseBut()
     {
         //Loads new scene
         SceneManager.LoadScene("GhostDatabase");
-    }
-
-    public void RunButtom()
-    {
-        SceneManager.LoadScene("CampusScene");
     }
 }

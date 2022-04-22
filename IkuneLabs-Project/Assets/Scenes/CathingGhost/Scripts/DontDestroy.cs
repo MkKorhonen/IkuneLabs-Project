@@ -9,7 +9,7 @@ public class DontDestroy : MonoBehaviour
         //Prevents this gameObject from being destroyd when new scene is loaded.
         GameObject[] objs = GameObject.FindGameObjectsWithTag("GhostData");
 
-        if (objs.Length > 2)
+        if (objs.Length > 1)
         {
             Destroy(this.gameObject);
         }

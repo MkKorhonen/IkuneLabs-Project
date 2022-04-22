@@ -37,6 +37,7 @@ public class TextRay : MonoBehaviour
     public GameObject catchScreen;
     public GameObject deathScreen;
     public GameObject armor;
+    public TextMeshProUGUI lootText;
 
     public float moveSpeed;
 
@@ -44,11 +45,15 @@ public class TextRay : MonoBehaviour
     public float attackRange;
     GhostScript ghostScript;
     StunnedGhost stunnedGhost;
+    GhostList ghostLis;
+    BagMenu bagMenu;
+    Inventory inventory;
 
     public static TextRay instance;
     private void Awake()
     {
         instance = this;
+        inventory = new Inventory();
     }
 
     private void Start()
@@ -62,6 +67,11 @@ public class TextRay : MonoBehaviour
         curCatchTime = catchTime;
         ghostScript = GameObject.FindGameObjectWithTag("Ghost").GetComponent<GhostScript>();
         stunnedGhost = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<StunnedGhost>();
+        bagMenu = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<BagMenu>();
+        bagMenu.SetInventory(inventory);
+        ghostLis = GameObject.FindGameObjectWithTag("GhostData").GetComponent<GhostList>();
+        ghostLis.SetInventory(inventory);
+        ghostLis.GiveItemList();
     }
 
     private void Update()
@@ -141,7 +151,7 @@ public class TextRay : MonoBehaviour
 
     public void Scenechange()
     {
-
+        SceneManager.LoadScene("CampusScene");
     }
 
     //Spawns a random ghost prefab and then adds it in the list of spawned ghosts
@@ -209,9 +219,15 @@ public class TextRay : MonoBehaviour
 
     }
 
+    public void SetInventory(Inventory inventory)
+    {
+        this.inventory = inventory;
+    }
     public void TestButtom()
     {
-        TakeDamage();
+        //List<Item> testi = inventory.GetItemList();
+        inventory.AddItem(new Item { itemType = Item.ItemType.Capsule, amount = 1 });
+        //inventory.RemoveItem(testi[0]);
     }
 
     //Stops the game, destroys the current selected ghost prefab and opens new window
@@ -252,6 +268,7 @@ public class TextRay : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         obj.SetActive(false);
+        Scenechange();
     }
 
     //sets health and healthText with given value
@@ -273,12 +290,16 @@ public class TextRay : MonoBehaviour
     public void MoreTime()
     {
         curCatchTime += 30;
+        inventory.RemoveItem(new Item { itemType = Item.ItemType.Clock, amount = 1 });
+        bagMenu.LoadBag();
     }
 
     //Activate armor gameobject
     public void ActiveArmor()
     {
         armor.SetActive(true);
+        inventory.RemoveItem(new Item { itemType = Item.ItemType.Armor, amount = 1 });
+        bagMenu.LoadBag();
     }
     
     //activates and deactivates itemMenu gameobject
@@ -287,12 +308,55 @@ public class TextRay : MonoBehaviour
         if (itemMenu.activeSelf == false)
         {
             itemMenu.SetActive(true);
-            gun.SetActive(false);
+            bagMenu.LoadBag();
+            gun.SetActive(false);          
         }
         else
         {
             itemMenu.SetActive(false);
             gun.SetActive(true);
         }
+    }
+
+    public void LootHandler(int id)
+    {
+        if (id == 0)
+        {
+            int randomNum = Random.Range(5, 10);
+            inventory.AddItem(new Item { itemType = Item.ItemType.Capsule, amount = randomNum });
+            lootText.text = "You got: " + randomNum + " Ghost capsules!";
+        }
+
+        if (id == 1)
+        {
+            int randomNum = Random.Range(1, 3);
+            inventory.AddItem(new Item { itemType = Item.ItemType.Glue, amount = randomNum });
+            lootText.text = "You got: " + randomNum + " Ghost glues!";
+        }
+
+        if (id == 2)
+        {
+            int randomNum = Random.Range(1, 2);
+            inventory.AddItem(new Item { itemType = Item.ItemType.Armor, amount = randomNum });
+            lootText.text = "You got: " + randomNum + " Plasma armors!";
+        }
+
+        if (id == 3)
+        {
+            int randomNum = Random.Range(1, 5);
+            inventory.AddItem(new Item { itemType = Item.ItemType.Clock, amount = randomNum });
+            lootText.text = "You got: " + randomNum + " Haunted clock!";
+        }
+        ghostLis.GetInventory();
+
+    }
+
+    public void RemoveItemsFromInv(int id)
+    {
+        if (id == 1)
+            inventory.RemoveItem(new Item { itemType = Item.ItemType.Capsule, amount = 1 });
+        if (id == 2)
+            inventory.RemoveItem(new Item { itemType = Item.ItemType.Glue, amount = 1 });
+        bagMenu.LoadBag();
     }
 }

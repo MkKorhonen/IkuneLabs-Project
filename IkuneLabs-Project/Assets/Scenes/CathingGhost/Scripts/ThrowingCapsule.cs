@@ -6,6 +6,7 @@ public class ThrowingCapsule : MonoBehaviour
 {
     public GameObject capsule;
     public GameObject throwCapsule;
+    public GameObject tutorialPanel;
 
     public float capsuleSpeed;
     public float throwRate;
@@ -29,20 +30,24 @@ public class ThrowingCapsule : MonoBehaviour
     {
         //Check if the Capsule prefab is active, if it is it will call the ThrowCap function when you touch the screen and it has been more time from previous
         //throw than what is the current throwRate. 
-        if (capsule.activeSelf == true)
+        if (capsule.activeSelf == true && tutorialPanel.activeSelf == false)
         {
             if (Time.time - lastThrowTime >= throwRate)
                 capsule.SetActive(true);
+
             if (Input.touchCount == 1)
             {
-                if (Time.time - lastThrowTime >= throwRate)
-                    ThrowCap();
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
+                {
+                    if (Time.time - lastThrowTime >= throwRate)
+                        ThrowCap();
+                }
             }
         }
         return;
     }
 
-    void ThrowCap()
+    public void ThrowCap()
     {
         //Resets the lastThrowTime to current time and then spawns a capsule prefab that will move forward from camera.
         // After 3 seconds that capsule will get destroyd.
@@ -52,6 +57,13 @@ public class ThrowingCapsule : MonoBehaviour
         proj.GetComponent<Rigidbody>().velocity = cam.transform.forward * capsuleSpeed;
         capsule.SetActive(false);
         Destroy(proj, 3.0f);
+        StartCoroutine(DelayFunction());
+    }
+
+    IEnumerator DelayFunction()
+    {
+        yield return new WaitForSeconds(3);
         capsule.SetActive(true);
     }
+
 }

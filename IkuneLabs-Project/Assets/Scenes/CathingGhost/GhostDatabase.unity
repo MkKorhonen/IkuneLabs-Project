@@ -1338,7 +1338,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1470333879}
         m_TargetAssemblyTypeName: GhostDatabaseHandler, Assembly-CSharp
-        m_MethodName: YellowInfoBox
+        m_MethodName: WhiteInfoBox
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1948,7 +1948,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1470333879}
         m_TargetAssemblyTypeName: GhostDatabaseHandler, Assembly-CSharp
-        m_MethodName: BlueInfoBox
+        m_MethodName: GreenInfoBox
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2167,7 +2167,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1470333879}
         m_TargetAssemblyTypeName: GhostDatabaseHandler, Assembly-CSharp
-        m_MethodName: WhiteInfoBox
+        m_MethodName: YellowInfoBox
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2389,7 +2389,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1470333879}
         m_TargetAssemblyTypeName: GhostDatabaseHandler, Assembly-CSharp
-        m_MethodName: GreenInfoBox
+        m_MethodName: BlueInfoBox
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
