@@ -86,26 +86,27 @@ public class GPSLocation : MonoBehaviour
             {
                 boundsCheck.text = "Player within bounds";
                 
+                // Location-based movement, it's commented out because it's not working correctly
                 if(playerCurLatitude > centerLatitude && playerCurLatitude != playerLastLatitude)
                 {
                     // Move up
-                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, top.transform.position, 5 * Time.deltaTime);
+                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, top.transform.position, 50 * Time.deltaTime);
                 }
                 else
                 {
                     // Move down
-                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, bottom.transform.position, 5 * Time.deltaTime);
+                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, bottom.transform.position, 50 * Time.deltaTime);
                 }
 
                 if(playerCurLongitude > centerLongitude && playerCurLongitude != playerLastLongitude)
                 {
                     // Move right
-                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, right.transform.position, 5 * Time.deltaTime);
+                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, right.transform.position, 50 * Time.deltaTime);
                 }
                 else
                 {
                     // Move left
-                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, left.transform.position, 5 * Time.deltaTime);
+                    //playerController.transform.position = Vector3.MoveTowards(playerController.transform.position, left.transform.position, 50 * Time.deltaTime);
                 }
             }
             else

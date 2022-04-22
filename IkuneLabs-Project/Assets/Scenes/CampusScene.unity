@@ -1035,6 +1035,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1322cae0cc45ee0488710e63f8edb9d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GPSStatus: {fileID: 1904514565}
+  latitudeValue: {fileID: 42416785}
+  longitudeValue: {fileID: 740535245}
+  boundsCheck: {fileID: 1099240157}
+  playerController: {fileID: 1214115466}
+  center: {fileID: 1526731881}
+  left: {fileID: 83317253}
+  right: {fileID: 1757092820}
+  top: {fileID: 698549527}
+  bottom: {fileID: 541053531}
 --- !u!4 &313038463
 Transform:
   m_ObjectHideFlags: 0
@@ -1921,6 +1931,11 @@ Transform:
   m_Father: {fileID: 112019002}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &541973667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1893769056011736, guid: eea16ef0f58854448aaa9db9257bc84b, type: 3}
+  m_PrefabInstance: {fileID: 1742039787}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &551219330
 GameObject:
   m_ObjectHideFlags: 0
@@ -2905,7 +2920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &732759101
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4864,6 +4879,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a12f6e5c7f67125419feb8405a1dea51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dman: {fileID: 541973667}
+  speed: 50
+  mobileSpeed: 3
 --- !u!1 &1229944896
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,6 +44,20 @@ public class PlayerMovement : MonoBehaviour
                 moveDirection *= mobileSpeed;
 
                 characterController.Move(moveDirection * Time.deltaTime);
+                if (moveDirection != Vector3.zero)
+                {
+                    dman.transform.rotation = Quaternion.LookRotation(moveDirection);
+                }
+
+                if(touch.phase == TouchPhase.Moved)
+                {
+                    dman.GetComponent<Animation>().Play("Run");
+                }
+
+                if (touch.phase == TouchPhase.Stationary)
+                {
+                    dman.GetComponent<Animation>().Play("Idle");
+                }
             }
         }
     }
